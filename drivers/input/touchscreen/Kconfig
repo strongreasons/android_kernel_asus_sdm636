@@ -1242,4 +1242,10 @@ source "drivers/input/touchscreen/hxchipset_X01BD/Kconfig"
 
 source "drivers/input/touchscreen/NVT_Touch_X00TD/Kconfig"
 
+config SWEEP2SLEEP
+        tristate "Sweep to put device to sleep"
+        default y
+        help
+          Say Y here to support sweep2sleep
+
 endif
