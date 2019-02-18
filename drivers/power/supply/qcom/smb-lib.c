@@ -4988,7 +4988,7 @@ static void smblib_handle_typec_removal(struct smb_charger *chg)
 
 	/* reset input current limit voters */
 	vote(chg->usb_icl_votable, USER_VOTER, false, 0);
-	vote(chg->usb_icl_votable, LEGACY_UNKNOWN_VOTER, true, 0);
+	vote(chg->usb_icl_votable, LEGACY_UNKNOWN_VOTER, true, 100000);
 	vote(chg->usb_icl_votable, PD_VOTER, false, 0);
 	vote(chg->usb_icl_votable, USB_PSY_VOTER, false, 0);
 	vote(chg->usb_icl_votable, DCP_VOTER, false, 0);
