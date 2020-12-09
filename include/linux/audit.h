@@ -594,6 +594,7 @@ static inline int audit_update_lsm_rules(void)
 }
 #define audit_enabled 0
 #endif /* CONFIG_AUDIT */
+
 static inline void audit_log_string(struct audit_buffer *ab, const char *buf)
 {
 	audit_log_n_string(ab, buf, strlen(buf));
