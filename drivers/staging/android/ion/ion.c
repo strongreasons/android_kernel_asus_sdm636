@@ -205,8 +205,10 @@ struct ion_buffer *__ion_alloc(struct ion_device *idev, size_t len,
 {
 	struct ion_buffer *buffer;
 	struct ion_heap *heap;
+	const unsigned int MAX_DBG_STR_LEN = 64;
+	char dbg_str[64];
+	unsigned int dbg_str_idx = 0;
 
-	len = PAGE_ALIGN(len);
 	if (!len)
 		return ERR_PTR(-EINVAL);
 
