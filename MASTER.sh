@@ -135,7 +135,7 @@ DATE=$(TZ=Asia/Jakarta date +"%Y%m%d-%T")
 		GCC32_DIR=$KERNEL_DIR/gcc32
 
 	msg "|| Cloning Anykernel ||" 
-	git clone --depth 1 --no-single-branch https://github.com/kuplemarkeple/AK3
+	git clone --depth 1 https://github.com/kuplemarkeple/AnyKernel3
 }
 
 ##------------------------------------------------------##
