@@ -46,7 +46,7 @@ DEVICE="X00T"
 
 # The defconfig which should be used. Get it from config.gz from
 # your device or check source
-DEFCONFIG=prototype_defconfig
+DEFCONFIG=wizard_defconfig
 
 # Specify compiler. 
 # 'clang' or 'gcc'
@@ -56,7 +56,7 @@ COMPILER=gcc
 INCREMENTAL=1
 
 # Push ZIP to Telegram. 1 is YES | 0 is NO(default)
-PTTG=1
+PTTG=0
 	if [ $PTTG = 1 ]
 	then
 		# Set Telegram Chat ID
@@ -90,7 +90,7 @@ LOG_DEBUG=0
 
 ## Set defaults first
 DISTRO=$(cat /etc/issue)
-KBUILD_BUILD_HOST=Termux
+KBUILD_BUILD_HOST=CLI
 CI_BRANCH=$(git rev-parse --abbrev-ref HEAD)
 token=1730953252:AAGjYnA6BTlLUtUKQnD5ljD1mNt9E0TOlCs
 export KBUILD_BUILD_HOST CI_BRANCH
@@ -131,14 +131,11 @@ DATE=$(TZ=Asia/Jakarta date +"%Y%m%d-%T")
 		msg "|| Cloning GCC 9.3.0 baremetal ||"
 		git clone --depth=1 https://github.com/KudProject/aarch64-linux-android-4.9 -b master $KERNEL_DIR/gcc64
 		git clone --depth=1 https://github.com/KudProject/arm-linux-androideabi-4.9 -b master $KERNEL_DIR/gcc32
-                git clone --depth=1 https://github.com/NusantaraDevs/clang -b dev/10.0 $KERNEL_DIR/clang
-                CLANG_DIR=$KERNEL_DIR/clang
 		GCC64_DIR=$KERNEL_DIR/gcc64
 		GCC32_DIR=$KERNEL_DIR/gcc32
 
 	msg "|| Cloning Anykernel ||" 
-	git clone --depth 1 --no-single-branch https://github.com/kuplemarkeple/AK3 -b master
-	sed -i "s/kernel.string=.*/kernel.string=$ZIPNAME by Tiktodz/g" AnyKernel3/anykernel.sh
+	git clone --depth 1 --no-single-branch https://github.com/kuplemarkeple/AK3
 }
 
 ##------------------------------------------------------##
