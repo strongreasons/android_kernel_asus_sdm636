@@ -56,11 +56,11 @@ COMPILER=gcc
 INCREMENTAL=1
 
 # Push ZIP to Telegram. 1 is YES | 0 is NO(default)
-PTTG=0
+PTTG=1
 	if [ $PTTG = 1 ]
 	then
 		# Set Telegram Chat ID
-		CHATID="-1001575748685"
+		CHATID="-1001200423387"
 	fi
 
 # Generate a full DEFCONFIG prior building. 1 is YES | 0 is NO(default)
@@ -92,7 +92,7 @@ LOG_DEBUG=0
 DISTRO=$(cat /etc/issue)
 KBUILD_BUILD_HOST=CLI
 CI_BRANCH=$(git rev-parse --abbrev-ref HEAD)
-token=1730953252:AAGjYnA6BTlLUtUKQnD5ljD1mNt9E0TOlCs
+token=$BOT_TOKEN
 export KBUILD_BUILD_HOST CI_BRANCH
 
 ## Check for CI
@@ -158,7 +158,7 @@ exports() {
 ##---------------------------------------------------------##
 
 tg_post_msg() {
-	curl -s -X POST "$BOT_MSG_URL" -d chat_id="-1001575748685" \
+	curl -s -X POST "$BOT_MSG_URL" -d chat_id="-1001200423387" \
 	-d "disable_web_page_preview=true" \
 	-d "parse_mode=html" \
 	-d text="$1"
