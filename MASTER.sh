@@ -36,7 +36,7 @@ err() {
 KERNEL_DIR="$(pwd)"
 
 # The name of the Kernel, to name the ZIP
-ZIPNAME="wizard-Kernel"
+ZIPNAME="Wizard-Electro"
 
 # The name of the device for which the kernel is built
 MODEL="Asus Max Pro M1"
@@ -90,7 +90,7 @@ LOG_DEBUG=0
 
 ## Set defaults first
 DISTRO=$(cat /etc/issue)
-KBUILD_BUILD_HOST=CLI
+KBUILD_BUILD_HOST=master
 CI_BRANCH=$(git rev-parse --abbrev-ref HEAD)
 token=$BOT_TOKEN
 export KBUILD_BUILD_HOST CI_BRANCH
@@ -141,7 +141,7 @@ DATE=$(TZ=Asia/Jakarta date +"%Y%m%d-%T")
 ##------------------------------------------------------##
 
 exports() {
-	export KBUILD_BUILD_USER="CLI"
+	export KBUILD_BUILD_USER="master"
 	export ARCH=arm64
 	export SUBARCH=arm64
         
