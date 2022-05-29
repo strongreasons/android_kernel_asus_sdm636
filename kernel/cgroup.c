@@ -62,13 +62,6 @@
 #include <linux/binfmts.h>
 #include <linux/cpu_input_boost.h>
 #include <linux/devfreq_boost.h>
-#include <linux/proc_ns.h>
-#include <linux/nsproxy.h>
-#include <linux/file.h>
-#include <net/sock.h>
-
-#define CREATE_TRACE_POINTS
-#include <trace/events/cgroup.h>
 
 /*
  * pidlists linger the following amount before being destroyed.  The goal
