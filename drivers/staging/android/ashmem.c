@@ -143,6 +143,54 @@ static inline vm_flags_t calc_vm_may_flags(unsigned long prot)
 	       _calc_vm_trans(prot, PROT_EXEC,  VM_MAYEXEC);
 }
 
+static int ashmem_vmfile_mmap(struct file *file, struct vm_area_struct *vma)
+{
+	/* do not allow to mmap ashmem backing shmem file directly */
+	return -EPERM;
+}
+
+static unsigned long
+ashmem_vmfile_get_unmapped_area(struct file *file, unsigned long addr,
+				unsigned long len, unsigned long pgoff,
+				unsigned long flags)
+{
+	return current->mm->get_unmapped_area(file, addr, len, pgoff, flags);
+}
+
+static int ashmem_file_setup(struct ashmem_area *asma, size_t size,
+			     struct vm_area_struct *vma)
+{
+	static struct file_operations vmfile_fops;
+	static DEFINE_SPINLOCK(vmfile_fops_lock);
+	struct file *vmfile;
+
+	vmfile = shmem_file_setup(ASHMEM_NAME_DEF, size, vma->vm_flags);
+	if (IS_ERR(vmfile))
+		return PTR_ERR(vmfile);
+
+	/*
+	 * override mmap operation of the vmfile so that it can't be
+	 * remapped which would lead to creation of a new vma with no
+	 * asma permission checks. Have to override get_unmapped_area
+	 * as well to prevent VM_BUG_ON check for f_ops modification.
+	 */
+	if (!READ_ONCE(vmfile_fops.mmap)) {
+		spin_lock(&vmfile_fops_lock);
+		if (!vmfile_fops.mmap) {
+			vmfile_fops = *vmfile->f_op;
+			vmfile_fops.get_unmapped_area =
+				ashmem_vmfile_get_unmapped_area;
+			WRITE_ONCE(vmfile_fops.mmap, ashmem_vmfile_mmap);
+		}
+		spin_unlock(&vmfile_fops_lock);
+	}
+	vmfile->f_op = &vmfile_fops;
+	vmfile->f_mode |= FMODE_LSEEK;
+
+	WRITE_ONCE(asma->file, vmfile);
+	return 0;
+}
+
 static int ashmem_mmap(struct file *file, struct vm_area_struct *vma)
 {
 	struct ashmem_area *asma = file->private_data;
