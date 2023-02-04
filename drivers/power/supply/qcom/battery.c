@@ -332,7 +332,7 @@ static struct class_attribute pl_attributes[] = {
 /***********
  *  TAPER  *
 ************/
-#define MINIMUM_PARALLEL_FCC_UA		100000
+#define MINIMUM_PARALLEL_FCC_UA		900000
 #define PL_TAPER_WORK_DELAY_MS		100
 #define TAPER_RESIDUAL_PCT		75
 static void pl_taper_work(struct work_struct *work)
@@ -391,7 +391,7 @@ done:
  *  FCC  *
 **********/
 #define EFFICIENCY_PCT	80
-#define FCC_STEP_SIZE_UA 1000000
+#define FCC_STEP_SIZE_UA 2000000
 #define FCC_STEP_UPDATE_DELAY_MS 100
 #define STEP_UP 1
 #define STEP_DOWN -1
